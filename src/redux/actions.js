@@ -26,4 +26,9 @@ export const searchPriorityChange = (priority) => {
   };
 };
 
-
+export const toggleTodoStatus = (todoId) => {
+  return {
+    type: "todoList/toggleTodoStatus",
+    payload: todoId,
+  };
+};

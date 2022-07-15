@@ -12,17 +12,6 @@ export default function TodoList() {
 
   const todoList = useSelector(todoRemainingSelector);
 
-  const Todos = () => {
-    return todoList.map((todo) => (
-      <Todo
-        key={todo.id}
-        name={todo.name}
-        prioriry={todo.priority}
-        completed={todo.completed}
-      />
-    ));
-  };
-
   const dispatch = useDispatch();
   const handleAddButtonClick = () => {
     dispatch(
@@ -45,11 +34,21 @@ export default function TodoList() {
     setPriority(value);
   };
 
+
+
   return (
     <Row style={{ height: "calc(100% - 40px)" }}>
       <Col span={24} style={{ height: "calc(100% - 40px)", overflowY: "auto" }}>
         {todoList.length > 0 ? (
-          <Todos />
+          todoList.map((todo) => (
+            <Todo
+              key={todo.id}
+              id={todo.id}
+              name={todo.name}
+              prioriry={todo.priority}
+              completed={todo.completed}
+            />
+          ))
         ) : (
           <h1 style={{ textAlign: "center" }}>No todos yet</h1>
         )}

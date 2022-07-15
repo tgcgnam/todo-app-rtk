@@ -15,14 +15,20 @@ export const todoRemainingSelector = createSelector(
   searchPrioritySelector,
   (todoList, searchText, status, priority) => {
     return todoList.filter((todo) => {
-      const todos = todo.name.toLowerCase().includes(searchText.toLowerCase());
-
       if (status === "All") {
-        return priority.length ? todos && priority.includes(todo.priority) : todos;
+        return priority.length
+          ? todo.name.toLowerCase().includes(searchText.toLowerCase()) &&
+              priority.includes(todo.priority)
+          : todo.name.toLowerCase().includes(searchText.toLowerCase());
       }
 
       return (
-        todos && (status === "Completed" ? todo.completed : !todo.completed) 
+        todo.name.toLowerCase().includes(searchText.toLowerCase()) &&
+        (status === "Completed" ? todo.completed : !todo.completed) &&
+        (priority.length
+          ? todo.name.toLowerCase().includes(searchText.toLowerCase()) &&
+            priority.includes(todo.priority)
+          : true)
       );
     });
   }
