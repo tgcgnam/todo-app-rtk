@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import Todo from "../Todo";
 import { Col, Row, Input, Button, Select, Tag } from "antd";
-import { addTodo } from "../../redux/actions";
 import { todoRemainingSelector } from "../../redux/selectors";
+import TodosSlide from "./todosSlide";
 
 export default function TodoList() {
   const [todoName, setTodoName] = useState("");
@@ -15,7 +15,7 @@ export default function TodoList() {
   const dispatch = useDispatch();
   const handleAddButtonClick = () => {
     dispatch(
-      addTodo({
+      TodosSlide.actions.addTodo({
         id: uuidv4(),
         name: todoName,
         completed: false,
@@ -33,8 +33,6 @@ export default function TodoList() {
   const handlePriorityChange = (value) => {
     setPriority(value);
   };
-
-
 
   return (
     <Row style={{ height: "calc(100% - 40px)" }}>

@@ -1,12 +1,9 @@
-import { createSelector } from "reselect";
+import { createSelector } from "@reduxjs/toolkit";
 
-export const todoListSelector = (state) => state.todoList;
-
-export const searchTextSelector = (state) => state.filters.search;
-
-export const searchStatusSelector = (state) => state.filters.status;
-
-export const searchPrioritySelector = (state) => state.filters.priority;
+const todoListSelector = (state) => state.todoList;
+const searchTextSelector = (state) => state.filters.search;
+const searchStatusSelector = (state) => state.filters.status;
+const searchPrioritySelector = (state) => state.filters.priority;
 
 export const todoRemainingSelector = createSelector(
   todoListSelector,
@@ -15,20 +12,18 @@ export const todoRemainingSelector = createSelector(
   searchPrioritySelector,
   (todoList, searchText, status, priority) => {
     return todoList.filter((todo) => {
+      const todos = todo.name.toLowerCase().includes(searchText.toLowerCase());
+
       if (status === "All") {
         return priority.length
-          ? todo.name.toLowerCase().includes(searchText.toLowerCase()) &&
-              priority.includes(todo.priority)
-          : todo.name.toLowerCase().includes(searchText.toLowerCase());
+          ? todos && priority.includes(todo.priority)
+          : todos;
       }
 
       return (
-        todo.name.toLowerCase().includes(searchText.toLowerCase()) &&
+        todos &&
         (status === "Completed" ? todo.completed : !todo.completed) &&
-        (priority.length
-          ? todo.name.toLowerCase().includes(searchText.toLowerCase()) &&
-            priority.includes(todo.priority)
-          : true)
+        (priority.length ? todos && priority.includes(todo.priority) : todos)
       );
     });
   }
