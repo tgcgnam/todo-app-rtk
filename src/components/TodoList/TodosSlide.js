@@ -34,7 +34,9 @@ const TodosSlide = createSlice({
     },
     toggleTodoStatus: (state, action) => {
       const currentTodo = state.filter((todo) => todo.id === action.payload);
-      currentTodo.completed = !currentTodo.completed;
+      if (currentTodo) {
+        currentTodo.completed = !currentTodo.completed;
+      }
     },
   },
 });
